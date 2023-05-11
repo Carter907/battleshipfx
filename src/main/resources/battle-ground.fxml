@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="battleGroundPane" xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          vgap="2"
+          hgap="2"
+          alignment="CENTER"
+          fx:controller="com.example.battleshipgame.controllers.BattleGroundController"
+          >
+
+</GridPane>

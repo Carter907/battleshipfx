@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.LineTo?>
+<?import javafx.scene.shape.MoveTo?>
+<?import javafx.scene.shape.QuadCurveTo?>
+<?import javafx.scene.shape.Path?>
+<Path xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.battleshipgame.controllers.EnemyShipController"
+      fx:id="enemyShip"
+>
+
+    <elements>
+        <MoveTo x="10"/>
+        <LineTo x="50" y="0"/>
+        <LineTo x="50" y="15"/>
+        <QuadCurveTo controlX="0" controlY="15" x="10" y="0"/>
+        <MoveTo x="10" y="5"/>
+        <LineTo x="30" y="9"/>
+    </elements>
+
+</Path>

@@ -1,0 +1,14 @@
+.root {
+    -fx-background-color: black;
+}
+
+#battleShip {
+    -fx-fill: darkblue;
+    -fx-stroke: lightgray;
+    -fx-stroke-width: 2px;
+}
+#enemyShip {
+    -fx-fill: red;
+    -fx-stroke: lightgray;
+    -fx-stroke-width: 2px;
+}
