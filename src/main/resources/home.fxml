@@ -9,13 +9,36 @@
 <?import javafx.scene.shape.Path?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.StackPane?>
-<StackPane fx:id="root" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.example.battleshipgame.controllers.HomeController"
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.battleshipgame.controllers.HomeController"
            >
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
+    <top>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Label fx:id="title">
+                    Welcome to BattleShip!
+                </Label>
+            </HBox>
+            <Button fx:id="playButton">
+                about BattleShip
+            </Button>
+        </VBox>
+
+
+    </top>
+
+
+    <center>
+        <StackPane fx:id="root" alignment="CENTER" >
+
+        </StackPane>
+    </center>
 
 
 
-</StackPane>
+</BorderPane>

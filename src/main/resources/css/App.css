@@ -7,8 +7,24 @@
     -fx-stroke: lightgray;
     -fx-stroke-width: 2px;
 }
+#battleGroundPane {
+    -fx-border-color: gray;
+    -fx-border-width: 2px;
+
+}
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: White;
+    -fx-border-color: gray;
+
+}
+
 #enemyShip {
     -fx-fill: red;
     -fx-stroke: lightgray;
     -fx-stroke-width: 2px;
+}
+#title {
+    -fx-text-fill: White;
+
 }

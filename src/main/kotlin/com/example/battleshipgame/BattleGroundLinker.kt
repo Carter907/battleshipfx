@@ -6,6 +6,8 @@ import com.example.battleshipgame.controllers.BattleShipController
 import com.example.battleshipgame.controllers.BattleTileController
 import com.example.battleshipgame.controllers.EnemyShipController
 import com.example.battleshipgame.model.BattleGround
+import javafx.scene.control.ButtonType
+import javafx.scene.control.Dialog
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
@@ -18,71 +20,43 @@ class BattleGroundLinker(
 ) {
 
     fun link() {
-        for (i in 0..9) {
-            for (j in 0..9) {
-                battleGroundPane.add(
-                    runFxmlElement<BattleTileController>(context),
-                    j, i
-                )
+        battleGround.placeShip()
+        battleGround.board.forEach { println(it.contentToString()) }
 
+        for (r in battleGround.board.indices) {
+            for (c in battleGround.board[r].indices) {
+                battleGroundPane.add(runFxmlElement<BattleTileController>(context) {
+                    battleTile.setOnMouseClicked {
+                        if (battleGround.board[r][c] == 1) {
+                            revealShip();
+                            val hitDialog = Dialog<String>();
+                            hitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
+                            hitDialog.contentText = "you hit the ship with ${battleGround.hits} hits left!"
+                            hitDialog.showAndWait();
+                        }
+
+                    }
+
+
+
+                }.battleTile, c, r);
+
+            }
+
+        }
+    }
+
+    private fun revealShip() {
+        for (r in battleGround.board.indices) {
+            for (c in battleGround.board[r].indices) {
+                if (battleGround.board[r][c] == 1) {
+                    val rectangle = (battleGroundPane.children.find { GridPane.getColumnIndex(it) == c && GridPane.getRowIndex(it) == r } as Rectangle)
+                    rectangle.fill = Color.INDIANRED;
+                }
             }
         }
 
-        fillShips(battleGround.teamCount)
     }
 
-    private fun fillShips(teamCount: Int) {
 
-        var col = 0;
-        var row = 0;
-
-        outer@
-        for (i in 0 until teamCount) {
-
-            col = (0..9).random()
-            row = (0..4).random();
-            do {
-                val shipsAtIndex = battleGroundPane.children.stream().filter {
-                    GridPane.getColumnIndex(it) == col
-                            && GridPane.getRowIndex(it) == row && it is Path
-                }.toList()
-                if (shipsAtIndex.size > 0) {
-                    col = (0..9).random()
-                    row = (0..4).random();
-                }
-
-            } while (shipsAtIndex.size > 0);
-
-
-            battleGroundPane.add(
-                runFxmlElement<BattleShipController>(context),
-                col, row
-            )
-
-
-        }
-        outer@
-        for (i in 0 until teamCount) {
-
-            col = (0..9).random()
-            row = (5..9).random();
-            do {
-                val shipsAtIndex = battleGroundPane.children.stream().filter {
-                    GridPane.getColumnIndex(it) == col
-                            && GridPane.getRowIndex(it) == row && it is Path
-                }.toList()
-                if (shipsAtIndex.size > 0) {
-                    col = (0..9).random()
-                    row = (5..9).random();
-                }
-
-            } while (shipsAtIndex.size > 0);
-
-
-            battleGroundPane.add(
-                runFxmlElement<EnemyShipController>(context),
-                col, row
-            )
-        }
-    }
 }
