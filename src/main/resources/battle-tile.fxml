@@ -9,5 +9,5 @@
 <?import javafx.scene.shape.Rectangle?>
 <Rectangle fx:id="battleTile" xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           width="50" height="50" fill="gray"
+           width="75" height="75" fill="gray"
            fx:controller="com.example.battleshipgame.controllers.BattleTileController"/>

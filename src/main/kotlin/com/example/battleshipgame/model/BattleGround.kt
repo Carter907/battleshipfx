@@ -8,7 +8,7 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.Path
 import javafx.scene.shape.Rectangle
 
-class BattleGround(val teamCount: Int) {
+class BattleGround {
 
     var hits = 15;
 

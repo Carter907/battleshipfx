@@ -14,7 +14,7 @@ class BattleGroundController : Controller() {
     lateinit var battleGroundPane: GridPane
 
     override fun onCreate() {
-        val battleGround = BattleGround(5);
+        val battleGround = BattleGround();
         val battleGroundLinker = BattleGroundLinker(this, battleGround, battleGroundPane);
 
         battleGroundLinker.link();
