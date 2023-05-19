@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle
 class BattleTileController : Controller() {
 
     @FXML
-    lateinit var battleTile: Rectangle;
+    lateinit var battleTileRectangle: Rectangle;
 
     override fun onCreate() {
 

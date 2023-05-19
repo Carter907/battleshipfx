@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.shape.Rectangle?>
-<Rectangle fx:id="battleTile" xmlns="http://javafx.com/javafx"
+<Rectangle fx:id="battleTileRectangle" xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            width="75" height="75" fill="gray"
            fx:controller="com.example.battleshipgame.controllers.BattleTileController"/>

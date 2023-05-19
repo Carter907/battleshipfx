@@ -12,7 +12,7 @@ class BattleGround {
 
     var hits = 15;
 
-    val board: Array<Array<Int>> = Array(8) { Array(8) { 0 } };
+    var board: Array<Array<BattleTile?>> = Array(8) { Array(8) { BattleTile(isHit = false, isShip = false) } };
 
     fun placeShip() {
         val orientation = (0..1).random()
@@ -22,7 +22,7 @@ class BattleGround {
             x = (0..(board.size - 4)).random()
             y = (board.indices).random()
             for (i in x until (x+4)) {
-                board[y][i] = 1;
+                board[y][i] = BattleTile(isHit = false, isShip = true);
 
             }
 
@@ -31,11 +31,14 @@ class BattleGround {
             x = (board.indices).random()
             y = (0..(board.size-4)).random()
             for (i in y until (y+4)) {
-                board[i][x] = 1;
+                board[i][x] = BattleTile(isHit = false, isShip = true);
 
             }
         }
 
+    }
+
+    fun reset() {
 
 
     }

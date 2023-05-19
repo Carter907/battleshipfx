@@ -2,17 +2,15 @@ package com.example.battleshipgame
 
 import carte.toolfx.core.Controller
 import carte.toolfx.core.runFxmlElement
-import com.example.battleshipgame.controllers.BattleShipController
 import com.example.battleshipgame.controllers.BattleTileController
-import com.example.battleshipgame.controllers.EnemyShipController
 import com.example.battleshipgame.model.BattleGround
+import javafx.scene.Node
 import javafx.scene.control.ButtonType
 import javafx.scene.control.Dialog
 import javafx.scene.layout.GridPane
-import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
-import javafx.scene.shape.Path
 import javafx.scene.shape.Rectangle
+import java.util.function.Consumer
 
 class BattleGroundLinker(
     private val context: Controller, private val battleGround: BattleGround,
@@ -23,40 +21,53 @@ class BattleGroundLinker(
         battleGround.placeShip();
     }
 
+    private fun applyToRectangles(eachRectangle: (r: Int, c: Int) -> Unit) {
+
+
+        for (r in battleGround.board.indices) {
+            for (c in battleGround.board[r].indices) {
+                eachRectangle.invoke(r, c);
+            }
+        }
+    }
+
     fun link() {
 
-            battleGround.placeShip()
-            battleGround.board.forEach { println(it.contentToString()) }
-
-            for (r in battleGround.board.indices) {
-                for (c in battleGround.board[r].indices) {
-                    battleGroundPane.add(runFxmlElement<BattleTileController>(context) {
-                        battleTile.setOnMouseClicked {
-                            if (battleGround.board[r][c] == 1) {
-                                battleTile.fill = Color.INDIANRED;
-                                battleGround.hits--;
-                                val hitDialog = Dialog<String>();
-                                hitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
-                                hitDialog.contentText = "you hit the ship with ${battleGround.hits} hits left!"
-                                hitDialog.showAndWait();
-                            } else {
-                                val noHitDialog = Dialog<String>();
-                                battleGround.hits--;
-                                noHitDialog.contentText = "did not hit a ship. you have ${battleGround.hits} hits left"
-                                noHitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
-                                noHitDialog.showAndWait()
+        battleGround.placeShip()
+        battleGround.board.forEach { println(it.contentToString()) }
 
 
-                            }
 
-                        }
+        applyToRectangles { r, c ->
 
 
-                    }.battleTile, c, r);
+            battleGroundPane.add(runFxmlElement<BattleTileController>(context) {
+                battleTileRectangle.setOnMouseClicked {
+                    val battleTile = battleGround.board[r][c] ?: error("REEEEEEEEEEEEEEEEEEEE")
+                    if (battleTile.isShip) {
+                        battleTileRectangle.fill = Color.INDIANRED;
+
+
+                        battleGround.hits--;
+                        val hitDialog = Dialog<String>();
+                        hitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
+                        hitDialog.contentText = "you hit the ship with ${battleGround.hits} hits left!"
+                        hitDialog.showAndWait();
+                    } else {
+                        val noHitDialog = Dialog<String>();
+                        battleGround.hits--;
+                        noHitDialog.contentText = "did not hit a ship. you have ${battleGround.hits} hits left"
+                        noHitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
+                        noHitDialog.showAndWait()
+
+                    }
 
                 }
 
-            }
+
+            }.battleTileRectangle, c, r);
+
+        }
 
     }
 
