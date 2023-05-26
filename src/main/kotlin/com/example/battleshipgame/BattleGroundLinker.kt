@@ -6,6 +6,7 @@ import com.example.battleshipgame.controllers.BattleTileController
 import com.example.battleshipgame.model.BattleGround
 import com.example.battleshipgame.model.BattleTile
 import javafx.scene.Node
+import javafx.scene.control.ButtonBar
 import javafx.scene.control.ButtonType
 import javafx.scene.control.Dialog
 import javafx.scene.layout.GridPane
@@ -97,9 +98,12 @@ class BattleGroundLinker(
 
                         } else {
                             val wonDialog = Dialog<String>();
-                            wonDialog.dialogPane.buttonTypes.add(ButtonType.OK)
+                            val continueButton = ButtonType("Play Again!", ButtonBar.ButtonData.OK_DONE)
+                            val quitButton = ButtonType("I Quit!", ButtonBar.ButtonData.FINISH)
+                            wonDialog.dialogPane.buttonTypes.addAll(continueButton, quitButton)
+
                             wonDialog.contentText = "congrats you win!"
-                            wonDialog.showAndWait()
+                            println(wonDialog.showAndWait().orElseThrow())
                             reset();
 
                         }
