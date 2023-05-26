@@ -25,6 +25,7 @@ class BattleGroundLinker(
         battleGroundPane.children.clear();
         battleGround.reset()
         battleGround.placeShip();
+        link();
     }
 
     private fun applyAndAddRectangles() {
@@ -49,10 +50,17 @@ class BattleGroundLinker(
 
     }
 
+
     fun link() {
 
         battleGround.placeShip()
-        battleGround.board.forEach { println(it.contentToString()) }
+        battleGround.board.forEach {
+            it.forEach {
+                it ?: error("no battleTile?")
+                print(if (it.isShip) {1} else {0})
+            }
+            println();
+        }
 
 
 
@@ -61,15 +69,42 @@ class BattleGroundLinker(
 
             battleGroundPane.add(runFxmlElement<BattleTileController>(context) {
                 battleTileRectangle.setOnMouseClicked {
-                    val battleTile = battleGround.board[r][c] ?: error("REEEEEEEEEEEEEEEEEEEE")
+                    val battleTile = battleGround.board[r][c] ?: error("wtf")
                     if (battleTile.isShip && !battleTile.isHit && battleGround.hits > 0) {
                         battleTileRectangle.fill = Color.INDIANRED;
                         battleGround.hits--;
                         battleGround.board[r][c] = BattleTile(isHit = true, isShip = true)
-                        val hitDialog = Dialog<String>();
-                        hitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
-                        hitDialog.contentText = "you hit the ship with ${battleGround.hits} hits left!"
-                        hitDialog.showAndWait();
+                        var hits = 0;
+
+                        battleGround.board.forEach {
+                            it.forEach {
+                                it ?: error("no battle tile?")
+                                if (it.isShip && it.isHit) {
+
+                                    hits++;
+                                }
+
+                            }
+
+                        }
+
+                        if (hits < 4) {
+
+                            val hitDialog = Dialog<String>();
+                            hitDialog.dialogPane.buttonTypes.add(ButtonType.OK)
+                            hitDialog.contentText = "you hit the ship with ${battleGround.hits} hits left!"
+                            hitDialog.showAndWait();
+
+                        } else {
+                            val wonDialog = Dialog<String>();
+                            wonDialog.dialogPane.buttonTypes.add(ButtonType.OK)
+                            wonDialog.contentText = "congrats you win!"
+                            wonDialog.showAndWait()
+                            reset();
+
+                        }
+
+
                     } else if (!battleTile.isHit && battleGround.hits > 0) {
                         val noHitDialog = Dialog<String>();
                         battleGround.hits--;
@@ -92,7 +127,7 @@ class BattleGroundLinker(
                     } else if (battleGround.hits == 0) {
                         val noHitsLeftDialog = Dialog<String>();
                         noHitsLeftDialog.contentText = "you have no hits left!"
-                        applyToRec { r, c ->
+                        applyToBattleTiles { r, c ->
                             val battleTile = battleGround.board[r][c] ?: error("REEEEEEEEEEEEEEEEEEEE")
 
 

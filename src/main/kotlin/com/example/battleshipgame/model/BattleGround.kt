@@ -40,6 +40,15 @@ class BattleGround {
 
     fun reset() {
 
+        board = Array(8) {
+            Array(8) {
+                BattleTile(
+                    isHit = false,
+                    isShip = false
+                )
+            }
+        };
 
+        hits = 15;
     }
 }
